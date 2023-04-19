@@ -9,7 +9,7 @@ metadata:
 data:
   config.yaml: |
     rules:
-    - seriesQuery: 'iam_user_sync_kafka_kafka_read_write_time_seconds_sum{namespace!="",pod!=""}'
+    - seriesQuery: 'topic_lag{namespace!="", pod!=""}'
       resources:
         overrides:
           namespace:
@@ -17,6 +17,18 @@ data:
           pod:
             resource: pod
       name:
-        matches: 'iam_user_sync_kafka_kafka_read_write_time_seconds_sum'
-        as: 'iam_user_sync_kafka_kafka_delay_seconds'
-      metricsQuery: 'sum(rate(iam_user_sync_kafka_kafka_read_write_time_seconds_sum{<<.LabelMatchers>>}[1m])/rate(iam_user_sync_kafka_kafka_read_write_time_seconds_count{<<.LabelMatchers>>}[1m])) by (<<.GroupBy>>)'
+        matches: 'topic_lag'
+        as: 'topic_lag_custom'
+      metricsQuery: 'sum(avg_over_time(<<.Series>>{<<.LabelMatchers>>}[1m])) by (<<.GroupBy>>)'
+    externalRules:
+    - seriesQuery: 'topic_lag{namespace!="", pod!=""}'
+      resources:
+        overrides:
+          namespace:
+            resource: namespace
+          pod:
+            resource: pod
+      name:
+        matches: 'topic_lag'
+        as: 'topic_lag_external'
+      metricsQuery: 'sum(avg_over_time(<<.Series>>{<<.LabelMatchers>>}[1m])) by (<<.GroupBy>>)'

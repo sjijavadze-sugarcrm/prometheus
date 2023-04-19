@@ -29,7 +29,7 @@ spec:
         - --logtostderr=true
         - --prometheus-url=http://prometheus-operated.monitoring.svc:9090
         - --metrics-relist-interval=1m
-        - --v=4
+        - --v=6
         - --config=/etc/adapter/config.yaml
         ports:
         - containerPort: 6443

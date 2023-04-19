@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: metrics-example
+  namespace: metrics-example
+  labels:
+    monitoring: prometheus
+spec:
+  selector:
+    app: metrics-example
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      name: http
+  type: LoadBalancer

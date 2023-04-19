@@ -9,7 +9,9 @@ spec:
   serviceAccountName: prometheus
   serviceMonitorNamespaceSelector:
     matchLabels:
-      monitoring: prometheus
+      monitor: "true"
   serviceMonitorSelector:
     matchLabels:
-      team: idm
+      monitoring: prometheus
+  logLevel: info
+  queryLogFile: /prometheus/query.log

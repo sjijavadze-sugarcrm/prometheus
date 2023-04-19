@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: metrics-example
+  namespace: metrics-example
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: metrics-example
+  template:
+    metadata:
+      labels:
+        app: metrics-example
+    spec:
+      containers:
+      - name: metrics-example
+        image: <dockerhub-username>/metrics-example:latest
+        ports:
+          - name: http
+            containerPort: 8080
