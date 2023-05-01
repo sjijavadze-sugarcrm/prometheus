@@ -15,6 +15,10 @@ spec:
       external:
         metric:
           name: topic_lag_external
+          selector: # this is optional
+            matchLabels:
+              group_id: our_example_service
+              topic_name: example-topic
         target:
           type: AverageValue
           averageValue: 1
